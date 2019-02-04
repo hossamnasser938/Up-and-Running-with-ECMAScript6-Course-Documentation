@@ -1,7 +1,7 @@
 ## Welcome
-* **ECMAScript** is the specifications that JavaScript adheres or conforms to. It tells the browser how to interpret JavaScript code.
-* **Specifications** are a set of points that guides describing and identifying something.
-* In this course we will study **ES6(ECMAScript 6 or ECMAScript 2015) which is a later version of **ECMAScript**.
+* **ECMAScript** is the specifications that JavaScript adheres or conforms to. It tells the browser how to **interpret** JavaScript code.
+* **Specifications** are a set of points that guides **describing** and **identifying** something.
+* In this course we will study **ES6(ECMAScript 6 or ECMAScript 2015)** which is a later version of **ECMAScript**.
 * Precisely, we will look in ES6 at the following:
     * new features.
     * new keywords and operators that can be used to simplify code.

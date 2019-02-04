@@ -28,10 +28,10 @@ I'm Ibrahim. A student in the Second year. I'm 20 years old.
 * In JavaScript we can use a ` function ` or a ` var ` before we declare it. This is called **Hoisting**. However, this is not applicable to a ` classe `.  
     * **Functions**  
     ```
-    function testHoisting() {  // test
+    function testHoisting() {  
         console.log( "test" )
     }
-    testHoisting();
+    testHoisting();  // test
     ```
     ```
     testHoisting();  // test
@@ -59,7 +59,7 @@ I'm Ibrahim. A student in the Second year. I'm 20 years old.
         console.log(x)  // undefined
         var x = 5;
         ```
-        In this script, yes we x is saved in memory so we can use it but its initialization is not. That is equivalent to that:
+        In this script, yes x is saved in memory so we can use it but its initialization is not. That is equivalent to that:
         ```
         var x;
         console.log( x );  // undefined
@@ -101,9 +101,9 @@ The **Substudent** ` class ` **inherited** the ` function ` **describe** from th
 
 
 ## Getters and setters
-* We are familiar with **getter** and **setter** functions. They are used to provide a predefined way to access properties which ensures **encapsulation**.
+* We are familiar with **getter** and **setter** functions. They are used to provide a specified way to access properties which ensures **encapsulation**.
 * **getter** and **setter** functions are used in a bit different way in JavaScript.
-    * We do not use ` function ` keyword to **declare** them. Instead we use ` get ` keyword for **getter** and ` set ` keyword for **setters.
+    * We do not use ` function ` keyword to **declare** them. Instead we use ` get ` keyword for **getters** and ` set ` keyword for **setters**.
     * We do not use ` function ` syntax to **call** them. Instead we treat them as properties using dot notation.
 * Let's see an example:
 ```

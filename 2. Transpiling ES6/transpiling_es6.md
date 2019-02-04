@@ -18,7 +18,7 @@
     1. Reference **Babel** in an independent script by setting the ` src ` attribute to the [link](https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js) for **Babel in-browser**.
     2. Set the ` type ` attribute of your script to ` text/babel `.
 
-* Now we present our first **ES6** feature and see how perform those previous two steps to use **Babel in-browser transformer**.
+* Now we present our first **ES6** feature and see how to perform those previous two steps to use **Babel in-browser transformer**.
     * Our 1st feature is **function default args**. This feature allows you to specify default values for function arguments so that if you invoked the function without passing any arguments, it should use those default values.
     * We use this feature by just assigning the default values to function arguments in function definition.
     ```
@@ -71,11 +71,11 @@ module.exports = {
 ```
 Hints:
     * ` module.exports ` object contains information about our project.
-    * ` module ` object nested in ` module,exports ` contains information about which loaders will be used. In this example we added a loader called ` test ` which looks for .js files and load it using **bable-loader** without **node modules**.
+    * ` module ` object nested in ` module.exports ` contains information about which loaders will be used. In this example we added a loader called ` test ` which looks for .js files and load it using **bable-loader** without **node modules**.
 
 * Now we can run **webpack** simply by hitting ` webpack ` and see the result for our configurations(In this case a new file ` bundle.js ` will be created) which is transpiled from the file ` script.js `).
 * Now we can reference this new file ` bundle.js ` in our HTML.
-* Here are some additional installs on dev dependencies(I do not know why?):
+* Here are some additional installs on dev dependencies(I do not know why? We already installed them):
     *  ` npm install webpack@1.12.2 --save-dev `.
     * ` npm install babel-core@5.8.29 --save-dev `
     * ` npm install babel-loader@5.3.2 --save-dev `
@@ -96,9 +96,8 @@ Hints:
     var webpack = require('webpack');
     module.exports = {
         entry: '/script.js',
-        output: {
-          filename: 'bundle.js'},
-        rules: {
+        output: { filename: 'bundle.js'},
+        module: {
             rules: [
                 {
                   test: /\.js?/,

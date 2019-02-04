@@ -66,13 +66,13 @@ const delay = seconds => {
         delay(1).then( message => console.info( message ), error => console.error( error ) );
         // 1 seconds passed
         ```
-* ` then ` and ` catch ` method returns a ` Promise ` object which means you can **chain** more than one ` then ` functions.
+* ` then ` and ` catch ` methods return a ` Promise ` object which means you can **chain** more than one ` then ` functions.
 ```
 delay(3).then( message => message.toUpperCase() ).then( message => console.info( message ) );
 // 3 SECONDS PASSED
 ```
 * The ` Promise ` returned by ` then ` can be in one of its three states:
-    * **Pending** when when the handler function returns another **pending** ` Promise `.
+    * **Pending** when the handler function returns another **pending** ` Promise `.
     * **Resolved** when the handler function either returns an already **resolved** ` Promise `, returns a value(the returned ` Promise ` gets resolved  with the returned value as its value), or returns nothing(the returned ` Promise ` gets resolved with its valued set to ` undefined `).
     * **Rejected** when the handler function either **throws an error** or returns an already **rejected** ` Promise `.
 
@@ -114,7 +114,19 @@ delay(3).then( message => message.toUpperCase() ).then( message => console.info(
         response => console.info( response ),
         error => console.error( error )
         );
-    ```  
+    ```
+        * **Tip**: This line of code:
+        ```
+        getSpacePeople().then(
+            response => console.info( response ),
+            error => console.error( error )
+            );
+        ```
+        can be simplified to this:
+        ```
+        getSpacePeople().then( console.info, console.error );
+        ```
+        Instead of providing **anonymous functions** for **onFulfillment** and **onRejection** in which we execute one function which is ` console.info `, ` console.error ` respectively, we provide a **reference** to each function to be called.
 * It seems that this **URL** in the example does not work so far. For testing I used this URL 'https://jsonplaceholder.typicode.com/posts' and the script works.
 
 
@@ -133,20 +145,8 @@ const getSpacePeople = () => {
 Just like that? Yes, just like that.
 * ` fetch ` returns a ` Promise ` object whose value is the ` Response ` to that request.
 * On getting the ` Response `, we have a bunch of methods that we can use to deal with the content inside it. One of those methods is what we have just used which is ` json ` method which parses the ` Response ` to a JSON.
-* **Tip**: This line of code:
-```
-getSpacePeople().then(
-    response => console.info( response ),
-    error => console.error( error )
-    );
-```
-can be simplified to this:
-```
-getSpacePeople().then( console.info, console.error );
-```
-Instead of providing **anonymous functions** for **onFulfillment** and **onRejection** in which we execute one function which is ` console.info `, ` console.error ` respectively, we provide a **reference** to each function to be called.
 
-#### Map
+#### map
 * ` map ` is a ` method ` used to loop through an array of objects executing a given operation on each one and returns a list of the results.
 ```
 var squares = [4, 9, 16, 25, 36];

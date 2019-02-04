@@ -20,6 +20,13 @@ The new feature "**Default function parameters**" has been explained at chapter 
     }
     ```
     This way has the advantage of **reusage**. You can reuse this constructor to define as many objects as you need. Especially, You do not have to redefine methods each time you instantiate an object.
+        * **Hint**: ` instanceof ` operator is used to check if an object is created from a given constructor. Notice that ` typeof ` operator is used to check the **type** of **primitive** variables.
+        ```
+        var s = new Student("Hos", "Forth", "Good");
+        var id = 12345;
+        console.log( s instanceof Student );  // true
+        console.log( typeof id == "number" );  // true
+        ```
     * Using what's called **Object Literals**.
     ```
     var s = {
@@ -88,6 +95,126 @@ var s = {
         console.log( Array(times + 1).join( "meow" ) );
     }
     ```
+        * **Hint**: **Array** can be called as a constructor ` new Array() ` as well as a function ` Array() ` with the same result. Let's discuss how [and possibly why] does this occur?
+        * First let's see what happens when we call ` Student() ` as a **constructor** and as a **function**.
+            * As a **constructor**  
+            ```
+            var s = new Student( "Mossab", "Forth", "Good" );
+            ```
+            It simply returns a new object that is ` instanceof ` Student. You actually returns nothing but JavaScript does this for you. ` this ` keyword inside the ` Student ` function when called as a constructor using ` new ` keyword refers to the newly instantiated object.
+            * As a **function**  
+            ```
+            var s = Student( "Mossab", "Forth", "Good" );
+            ```  
+            In this case the ` student ` function returns nothing thus ` s ` is ` undefined `. What's worth than that is ` this ` inside ` Student ` function refers to the ` Window ` global object thus after executing this line you will get three variables defined globally: **name**, **year**, and **grade** as well as a function named **describeStudent**.
+            ```
+            console.log( name );  // "Mossab"
+            ```
+            Certainly you now feel like me. It's a problem, right? Let's see two ways to solve this problem:
+                * **Prevent** using ` Student ` as a **function**  
+                We can prevent that by defining ` Student ` **function** in ` strict ` **mode**. By doing this on calling ` Student ` as a function rather than a **constructor** you will get an error. We define a ` function ` or a whole **script** in **strict mode** by putting ` "use strict" ` in the first line.
+                ```
+                function Student( name, year, grade ) {
+                    "use strict"
+                    this.name = name;
+                    this.year = year;
+                    this.grade = grade;
+                    this.describeStudent = function() {
+                        console.log( `Name: ${this.name}, Year: ${this.year}, Grade: ${this.grade}` );
+                    }
+                }
+                var s = Student( "Mossab", "Forth", "Good" );  // Error
+                ```
+                * **Handle** that and let calling ` Student ` as a **function** behaves as it were called as a **constructor**.
+                ```
+                function Student( name, year, grade ) {
+                    "use strict"
+                    if( this instanceof Student ) {
+                        this.name = name;
+                        this.year = year;
+                        this.grade = grade;
+                        this.describeStudent = function() {
+                            console.log( `Name: ${this.name}, Year: ${this.year}, Grade: ${this.grade}` );
+                        }
+                    } else {
+                        return new Student( name, year, grade );
+                    }
+                }
+                var s = Student( "Mossab", "Forth", "Good" );
+                console.log( s );
+                /* Student {name: "Mossab", year: "Forth", grade: "Good", describeStudent: ƒ} */
+                ```
+                #### Modes in JavaScript
+                * In JavaScript we have two different modes:
+                1. **Sloppy mode**  
+                The default mode which we are familiar with.
+                2. **Strict mode**  
+                Which as the name implies, it is more restricted than the **Sloppy mode** which means it puts some restrictions when you write code as well as when this code is executed. These restrictions allow writing safe code but with less flexibility than **Sloppy mode**. to switch to **Strict mode** put ` "use strict"; ` on top of your **script** or **function**.
+                * Now let's rapidly see some differences between these modes:
+                    * In **strict mode** variables must be explicitly declared.
+                    ```
+                    function sloppyFun() {
+                        timp = 5;
+                    }
+                    sloppyFun();  // no problem
+                    ```
+                    ```
+                    function strictFun() {
+                        "use strict";
+                        timp = 5;
+                    }
+                    strictFun(); // Reference error
+                    ```
+                    This helps to prevent typos since if you are in sloppy mode and you intend to assign a variable called **temp** and instead of typing:
+                    ```
+                    temp = 5;
+                    ```
+                    You accidentally typed:
+                    ```
+                    timp = 5;
+                    ```
+                    JavaScript will declare a global variable named **timp** and initialize it with value equals 5.
+                    * In **strict mode** functions must be declared at top of the scope( function or script ).
+                    ```
+                    function sloppyFun() {
+                        if ( true ) {
+                            function x() {  // no problem
+                                // ...
+                            }
+                        }
+                    }
+                    ```
+                    ```
+                    function strictFun() {
+                        "use strict";
+                        if ( true ) {
+                            function x() {  // syntax error
+                                // ...
+                            }
+                        }
+                    }
+                    ```
+                    [This is what the documentation says. However, I tested it on Chrome and Mozilla and it workd with no syntax error].  
+                    However, you can use a variable declaration and a function expression with no problem.
+                    ```
+                    function strictFun() {
+                        "use strict";
+                        if ( true ) {
+                            var x = function() {  // no problem
+                                // ...
+                            }
+                        }
+                    }
+                    ```
+                    * In **strict mode** ` this ` is **undefined** in nonmethod functions[method functions are functions that are tight to a specific class or object]. However, in **sloppy mode** ` this ` is the global ` window ` object. This difference is what makes constructors defined in **strict mode** do not work as **functions**. Remember the ` Student ` **function** that we declared in **strict mode**. If we attempt to call it as a **function** since ` this ` is **undefined** it will generate error on executing:
+                    ```
+                    this.name = name;
+                    ```
+                    However if you call it as a constructor using ` new ` keyword ` this ` refers to the to-be-created object.
+                * **References**:
+                    * http://raganwald.com/2014/07/09/javascript-constructor-problem.html.
+                    * https://stackoverflow.com/questions/5827008/whats-the-difference-between-array1-and-new-array1-in-javascript.
+                    * Chapter 7 ("JavaScript Syntax") in the book Speaking JavaScript.  
     * A very simple(**less code**) and **readable** way is the new feature introduced by **ES6**. using the ` repeat ` method on strings.
     ```
     function meow( times ) {
@@ -163,7 +290,7 @@ The problem is with **scoping**.
     ```
     this.actions.forEach( function( action ) {
     ```
-    has no problem. However, on **getting into** the **anonymous function** which is a parameter to the ` forEach ` method you lose the refereenc to the ` cat ` object. So the problem is in this line:
+    has no problem. However, on **getting into** the **anonymous function** which is a parameter to the ` forEach ` method you lose the reference to the ` cat ` object. So the problem is in this line:
     ```
     var actionDescription = this.name + " can " + action;
     ```
@@ -200,7 +327,7 @@ The problem is with **scoping**.
       cat.printActions();
       ```  
   * Let's understand what is ` bind `?  
-  ` bind ` lets us define a function that is wrapped with a specific ` this ` which we give as a parameter using ` bind `. Whatever where you this function, it has its own ` this `. Let's see an example to understand it well.
+  ` bind ` lets us define a function that is wrapped with a specific ` this ` which we give as a parameter using ` bind `. Wherever you define that function, it has its own ` this `. Let's see an example to understand it well.
   ```
   var obj = {
       x: "some value",
@@ -237,7 +364,7 @@ The problem is with **scoping**.
 
 
 ## Destructuring assignment
-* **Destructuring assignment** is a new way to **retrieve** or **unpack** values** from __**literal**__ **arrays** or **objects**.
+* **Destructuring assignment** is a new way to **retrieve** or **unpack** values from __**literal**__ **arrays** or **objects**.
 * Let's assume that we have an array of elements ` arr ` and we wanna retrieve the first and third elements in variables to be used in further processing.
 ```
 var arr = ['h', 'i', 'j', 'k', 'l', 'm'];
@@ -324,14 +451,14 @@ var arr = ['h', 'i', 'j', 'k', 'l', 'm'];
 
 ## Generators
 * This feature requires a new **babel** script called **browser-polyfill**. Here is a link https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser-polyfill.min.js.
-* **Generator functions** are functions that __generates__ **Generator objects**. It is identified by an **asterisk** after **function** keyword like this ` function* `
+* **Generator functions** are functions that __generates__ **Generator objects**. It is identified by an **asterisk** after ` function ` keyword like this ` function* `
 * What is different about this type of functions is that it can be paused(using the ` yield ` keyword) in the middle of execution and resumed as many times as you need.
 * **Generator objects** are objects with 2 properties and 3 methods:
     * **properties**.
         * ` value ` the value generated by the **generator function**.
         * ` done ` which is a boolean indicating whether it is the last value and the generator function terminated or not.
     * **methods**
-        * ` next() ` gets the **next** value until specified by the next ` yield `.
+        * ` next() ` gets the **next** value specified by the next ` yield `.
         * ` return() ` gets the last value and terminate.
         * ` throw() ` throw an error.
 * Let's see an example to see how it works. Suppose we wanna print the **English alphabets** one each second in order. Certainly what comes to your mind when I say **"each second"** is the ` setInterval ` method. However the question is how each time you print an alphabet in turns.
@@ -346,7 +473,7 @@ var arr = ['h', 'i', 'j', 'k', 'l', 'm'];
         if ( nextIndex < alphabets.length ) {
             console.log( alphabets[nextIndex++] );
         } else {
-            console,log( "Finished" )
+            console.log( "Finished" )
             clearInterval( interval );
         }
     }
@@ -412,6 +539,7 @@ var arr = ['h', 'i', 'j', 'k', 'l', 'm'];
 var arr = new Array();
 console.log( typeof arr[Symbol.iterator] );  // function
 ```
+Hint: We are using the ` Array ` as an object and the bracket notation to access a property in this object. Do not get confused with using bracket notation with Arrays to get elements inside.
 
 #### Iterator Protocol
 * **Iterator Protocol** defines a way to produce a sequence of values and a return value when all values have been produced.
@@ -422,11 +550,11 @@ console.log( typeof arr[Symbol.iterator] );  // function
 ```
 var friends = ["Mossab", "Ayman", "Ismail"];
 var defaultIterator = friends[Symbol.iterator]();
-console.log( defaultIterator.next() );
-console.log( defaultIterator.next() );
-console.log( defaultIterator.next() );
-console.log( defaultIterator.next() );
-```        
+console.log( defaultIterator.next() );  // {value: "Mossab", done: false}
+console.log( defaultIterator.next() );  // {value: "Ayman", done: false}
+console.log( defaultIterator.next() );  // {value: "Ismail", done: false}
+console.log( defaultIterator.next() );  // {value: undefined, done: true}
+```          
 * Now let's define our own **iterator**.
 ```
 function generateIterator( arr ) {
@@ -441,10 +569,10 @@ function generateIterator( arr ) {
     };
 }
 var ourOwnIterator = generateIterator( friends );
-console.log( ourOwnIterator.next() );
-console.log( ourOwnIterator.next() );
-console.log( ourOwnIterator.next() );
-console.log( ourOwnIterator.next() );
+console.log( ourOwnIterator.next() );  // {value: "Hello ya Mossab Basha", done: false}
+console.log( ourOwnIterator.next() );  // {value: "Hello ya Ayman Basha", done: false}
+console.log( ourOwnIterator.next() );  // {value: "Hello ya Ismail Basha", done: false}
+console.log( ourOwnIterator.next() );  // {value: undefined, done: true}
 ```
 Here we defined a function ` generateIterator ` that returns an **iterator** object(an object contains implementation for ` next ` function). Then we invoked this function and stored the returned value which is an **iterator** object and used that object to iterate through the array.  
 Recall that this is a **closure**. The **lexical environment**(variable ` arr ` which is whatever passed to the ` generateIterator ` function(in this case it is ` friends `)) is attached to the ` next ` function.

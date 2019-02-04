@@ -1,11 +1,11 @@
 ## Let Keyword
-* Before ECMASCript 6 was released, we had only one way to declare a variable which is using the ` var ` keyword.
-* ECMAScript came out with 2 new ways to declare a variable which are using the keywords ` let ` and ` const
+* Before **ECMASCript** 6 was released, we had only one way to declare a variable which is using the ` var ` keyword.
+* **ECMAScript 6** came out with 2 new ways to declare a variable which are using the keywords ` let ` and ` const
 `.
 
 * Let's now differentiate between ` var ` and ` let `.
-    * ` var ` is scoped to the nearest function.
-    * ` let ` is scoped to the nearest enclosing block.
+    * ` var ` is **scoped** to the **nearest function**.
+    * ` let ` is **scoped** to the **nearest enclosing block**.
 
 * There are 3 different situations that help us know the difference between ` var ` and ` let `.
     * **Global**  
@@ -21,8 +21,8 @@
     console.log(window.i);  // 1
     console.log(window.j);  // undefined
     ```
-    * **Function**
-    When declaring variables **within a function**, ` var ` and ` let ` behaves the same way since the nearest function and the nearest enclosing block is that function.
+    * **Function**  
+    When declaring variables **within a function**, ` var ` and ` let ` behave the same way since the nearest function and the nearest enclosing block is that function.
     ```
     function x() {
         var v = "hossam";
@@ -34,8 +34,8 @@
     console.log( v );  // undefined
     console.log( l );  // undefined
     ```
-    * **Block**
-    Here is the difference. When declaring variables inside a **small scope** like an **if statement** or **for loop**, there is a big difference between ` var ` and ` let `. In this case variables declared using ` var ` is accessible inside this small block as well as the rest of the function. However, variables declared using ` let ` is accessible only in this small block and not accessible in the rest of the function.
+    * **Block**  
+    Here is the difference. When declaring variables inside a **small scope** like an **if statement** or **for loop**, there is a big difference between ` var ` and ` let `. In this case variables declared using ` var ` is accessible inside this **small block** as well as the rest of the **function** wrapping this small block. However, variables declared using ` let ` is accessible only in this small block and not accessible in the rest of the function.
         * ` if ` statement
         ```
         function x() {
@@ -63,7 +63,7 @@
             }
             x();
             ```
-            Here we have two variables with the same name but each of which has a different scope. One scoped to only the ` if ` statement while the other is scoped to the entire ` function `.
+            Here we have two variables with the **same name** but each of which has a **different scope**. One scoped to only the ` if ` statement while the other is scoped to the entire ` function `.
             * using ` var `.
             ```
             function x() {
@@ -89,7 +89,7 @@
             };
         }
         ```
-        Here we declared an array and looped 10 times assigning each element of the array a function that logs the value of i at each iteration. Although we expect each item in the array holds a function that logs a different i based on its index in the array, we find that all functions within the array logs the same i value which is 10. This is because i is declared using ` var ` so it is only one variable in the entire script scope that will eventually hold one value at the end of the loop which is 10.
+        Here we declared an array and looped 10 times assigning each element of the array a function that logs the value of i at each iteration. Although we expect each item in the array holds a function that logs a different i based on its index in the array, we find that all functions within the array logging the same i value which is 10. This is because i is declared using ` var ` so it is only one variable in the entire script scope that will eventually hold one value at the end of the loop which is 10.
         ```
         a[0]();  // 10
         a[3]();  // 10
@@ -130,7 +130,7 @@
     * [let vs var: scopes in for-loop [duplicate]](https://stackoverflow.com/questions/38801257/let-vs-var-scopes-in-for-loop)
 
 * Some tips from the **Boxes** example:
-    * to specify **CSS rule** for a tag in another tag simply reference the outer followed by > followed by inner.
+    * to specify **CSS rule** for a tag inside another tag simply reference the outer followed by > followed by the inner.
     ```
     section > div {
         width: 100px;
@@ -147,7 +147,7 @@
     var div = document.createElement("div");
     ```
     * to append that element to another node, use the method ` appendChild ` on the node you wanna append the new element to.
-    * the method ` getElementsByTagName ` returns an array of the returned elements that matches the given tag so you can access each one using bracket notation.
+    * the method ` getElementsByTagName ` returns an array of the elements that match the given tag so you can access each one using bracket notation.
     ```
     document.getElementsByTagName('section')[0].appendChild(div);
     ```
@@ -170,7 +170,7 @@ const PI;  // Error: missing initialization
 PI = 3.14;  
 ```
 * ` const ` has a **block scope** like ` let `.
-* A block that contains `const` can not contain a variable or even a function with the same name.
+* A block that contains `const` can not contain another **identifier**(a variable or a function) with the same name.
 ```
 const PI = 3.14;
 function PI() {  // Error: redeclaring
@@ -181,18 +181,18 @@ function PI() {  // Error: redeclaring
 
 
 ## Template strings
-* This thing we use to surround code in .md files is called **backticks**.
+* This thing we use to surround code in .md files is called **backticks**(which we use with template strings).
 * **Template strings** is a new feature in **ES6** which reduces the headache of concatenating strings with variables, putting necessary spaces between a string and a variable, putting line breaks and all that stuff.
 * consider this old **ES5**:
 ```
 function sayHello( firstName ) {
-    console.log( "Hello " + firstName + "\nWelcome on the board" );
+    console.log( "Hello " + firstName + ", Welcome on Board" );
 }
 ```
-Using **template stringd**:
+Using **template strings**:
 ```
 function sayHello( firstName ) {
-    console.log(`Hello ${firstName} Welcome on Board`);
+    console.log( `Hello ${firstName}, Welcome on Board` );
 }
 ```
 You just wrap your string in **backticks** and surround any variable with **${}**.
@@ -268,8 +268,7 @@ var arr = [...x];  // ["H", "e", "l", "l", "o", " ", "H", "o", "s", "."]
 
 ## Maps
 * A **Map** is a type of object which contains **key-value** pairs. **Regular Objects** also contain **key-value** pairs so what is the difference?
-    * In **Object** valid keys are strings and symbols only while in **Map** it can be a string, a number, an object, a function, any thing.
-    * In **Object** keys are keys and values are values while in **Map** a key can be a value and a value can be a key.
+    * In **Object**, valid keys are strings and symbols only while in **Map**, it can be an object, a function, or any primitive.
     * **Object** is not iterable in the sense that you can not iterate through key-value pairs, instead you should do that manually while **Map** is iterable and the key-value pairs are ordered based on insertion(what is inserted first is stored first, what is inserted next is stored next and so on).
     * In **Object** there is no way to get how many properties in an object while **Map** has a ` size ` property which tells how many **key-value pairs** are there.
 

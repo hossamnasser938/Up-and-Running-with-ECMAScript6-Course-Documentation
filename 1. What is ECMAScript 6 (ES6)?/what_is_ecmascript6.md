@@ -1,9 +1,10 @@
 ## What is ECMAScript 6
 * Let's talk about the history of JavaScript.
-    * JavaScript was **initially** released in 1995 by **Brendan Ike** at **Netscape**(Web browser). Then it was **adopted** by **Microsoft** as **JScript**. There were different versions of JavaScript for different browsers. From here a **need** for **standardization** has appeared.
-    * **ECMA** refers to **European Computer Manufacturer Association** which is the organization responsible for this standardization.
+    * JavaScript was **initially** released in 1995 by **Brendan Ike** at **Netscape**(Web browser). Then it was **adopted** by **Microsoft** as **JScript**.
+    * At first there were different versions of JavaScript for different browsers. From here a **need** for **standardization** has appeared.
+    * **ECMA** refers to **European Computer Manufacturer Association** which is the organization responsible for this **standardization**.
     * First, **ES1** was released in 1997.
-    * **ES2**, **ES3**, **ES4** were also released but with no big sensation(widespread reaction).
+    * Then **ES2**, **ES3**, and **ES4** were also released but with **no big sensation**(widespread reaction).
     * Then **ES5** were released in 2009.
     * And finally **ES6** was released in 2015 with great features.
 
