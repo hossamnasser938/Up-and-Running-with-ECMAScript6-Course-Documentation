@@ -30,7 +30,7 @@ const delayPromise = new Promise( function( resolve ) {
 ```  
     * Here we instantiated a ` Promise ` object passing the **executor** function as anonymous.
     * The **executor** function accepts arguments the ` resolve ` method(As we said passing the ` error ` method is optional).
-    * ` setTimeout ` is a function which defines a default **callback function** which is called after a certain time  if the **promise** is still **pending** neither **fulfilled** nor **rejected**. ` setTimeout` function accepts as arguments the **callback** function and the **certain time**.
+    * ` setTimeout ` is a function which executes a given function after a certain amount of time. ` setTimeout` accepts as arguments the **function** to be executed and the **certain time**.
     * We could reduce this code using the **arrow functions**:
     ```
     const delayPromise = new Promise( resolve => {
