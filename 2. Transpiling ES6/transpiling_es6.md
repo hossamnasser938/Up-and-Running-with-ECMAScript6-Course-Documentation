@@ -21,7 +21,7 @@
 * Now we present our first **ES6** feature and see how to perform those previous two steps to use **Babel in-browser transformer**.
     * Our 1st feature is **function default args**. This feature allows you to specify default values for function arguments so that if you invoked the function without passing any arguments, it should use those default values.
     * We use this feature by just assigning the default values to function arguments in function definition.
-    ```
+    ```html
     <!DOCTYPE html>
     <html>
         <head>
@@ -58,7 +58,7 @@
 * Now we have **webpack** installed. To use it in our project we should first create ` package.json ` file which will hold information about our project and its dependencies. To create this file after changinging directory to your project folder hit ` npm init ` and then fill some info about the project or skip them if it is just a practice.
 * Now We need to install **Babel loader** to be used alongside **Webpack** in our project. To instll **Babel loader** hit ` npm install --save-dev babel-loader `.
 * Before you begin using **webpack** for loading dependencies you must create a file called ` webpack.config.js ` which contains configurations defining what webpack should do on your project(You can find out how to specify this configurations on webpack official website).
-```
+```js
 module.exports = {
     entry: '/script.js',
     output: {filename: 'bundle.js'},
@@ -70,8 +70,8 @@ module.exports = {
 };
 ```
 Hints:
-    * ` module.exports ` object contains information about our project.
-    * ` module ` object nested in ` module.exports ` contains information about which loaders will be used. In this example we added a loader called ` test ` which looks for .js files and load it using **bable-loader** without **node modules**.
+  * ` module.exports ` object contains information about our project.
+  * ` module ` object nested in ` module.exports ` contains information about which loaders will be used. In this example we added a loader called ` test ` which looks for .js files and load it using **bable-loader** without **node modules**.
 
 * Now we can run **webpack** simply by hitting ` webpack ` and see the result for our configurations(In this case a new file ` bundle.js ` will be created) which is transpiled from the file ` script.js `).
 * Now we can reference this new file ` bundle.js ` in our HTML.
@@ -92,7 +92,7 @@ Hints:
     4. install **babel-present-env**.  
     ` npm install babel-present-env@1.6.0 --save-dev `
     5. Adjust the webpack configurations file ` webpack.config.js `.
-    ```
+    ```js
     var webpack = require('webpack');
     module.exports = {
         entry: '/script.js',
@@ -112,7 +112,7 @@ Hints:
     };
     ```
     6. Create a new file related to **presets** called ` .babelrc `.  
-    ```
+    ```js
     {
         "presets": ["env"]
     }
